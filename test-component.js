@@ -38,7 +38,7 @@ class TestComponent extends HTMLElement {
 		this.animalName = this.shadowRoot.querySelector('.animal');
 		this.increaseBtn = this._shadowRoot.querySelector('.increase');
 		this.decreaseBtn = this._shadowRoot.querySelector('.decrease');
-		this.dataArray = ['dolphin', 'ardvark', 'lynx', 'balooga'];
+		this.dataArray = [];
 		this.globalIndex = 0;
 
 		this.increase = this.increase.bind(this);
@@ -47,6 +47,7 @@ class TestComponent extends HTMLElement {
 	}
 
 	connectedCallback() {
+		this.dataArray = JSON.parse(this.dataset.array);
 		this.increaseBtn.addEventListener('click', this.increase);
 		this.decreaseBtn.addEventListener('click', this.decrease);
 		this.renderAnimalName();
