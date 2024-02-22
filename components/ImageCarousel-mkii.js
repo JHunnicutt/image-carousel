@@ -28,23 +28,11 @@ template2.innerHTML = `
         .img-1 {
             grid-column: 1 / -1;
             grid-row: 1 / 4;
-            background: darkslateblue;
+            // background: darkslateblue;
         }
 
         .img-2, .img-3, .img-4 {
             grid-row-end: -1;
-        }
-
-        .img-2 {
-            background: tomato;
-        }
-
-        .img-3 {
-            background: seagreen;
-        }
-
-        .img-4 {
-            background: gold;
         }
 
 
@@ -57,7 +45,7 @@ template2.innerHTML = `
             <div class="img img-3"></div>
             <div class="img img-4"></div>
         </div>
-        <button className="increaseBtn">></button>
+        <button class="increaseBtn">></button>
     </div>
 `;
 
@@ -66,7 +54,47 @@ class ImageCarouselmkii extends HTMLElement {
 		super();
 		this.shadow = this.attachShadow({ mode: 'open' });
 		this.shadow.appendChild(template2.content.cloneNode(true));
+
+		this.increaseBtn = this.shadow.querySelector('.increaseBtn');
+		this.decreaseBtn = this.shadow.querySelector('.decreaseBtn');
+		this.img1 = this.shadow.querySelector('.img-1');
+		this.img2 = this.shadow.querySelector('.img-2');
+		this.img3 = this.shadow.querySelector('.img-3');
+		this.img4 = this.shadow.querySelector('.img-4');
+		this.colorArray = [];
 	}
+
+	connectedCallback() {
+		this.increaseBtn.addEventListener('click', this.increaseBtnHandler);
+		this.decreaseBtn.addEventListener('click', this.decreaseBtnHandler);
+		this.colorArray = JSON.parse(this.dataset.colorarray);
+		this.renderImages();
+	}
+
+	renderImages() {
+		this.img1.style.background = this.colorArray[0];
+		this.img2.style.background = this.colorArray[1];
+		this.img3.style.background = this.colorArray[2];
+		this.img4.style.background = this.colorArray[3];
+	}
+
+	increaseBtnHandler = () => {
+		const color = this.colorArray.shift();
+		this.colorArray.push(color);
+
+		console.log(this.colorArray);
+
+		this.renderImages();
+	};
+
+	decreaseBtnHandler = () => {
+		const color = this.colorArray.pop();
+		this.colorArray.splice(0, 0, color);
+
+		console.log(this.colorArray);
+
+		this.renderImages();
+	};
 }
 
 window.customElements.define('image-carousel-mkii', ImageCarouselmkii);
