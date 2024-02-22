@@ -46,7 +46,7 @@ template1.innerHTML = `
     </div>
 `;
 
-class ImageCarousel extends HTMLElement {
+class ImageCarouselmki extends HTMLElement {
 	constructor() {
 		super();
 		this.shadow = this.attachShadow({ mode: 'open' });
@@ -95,4 +95,4 @@ class ImageCarousel extends HTMLElement {
 	}
 }
 
-window.customElements.define('image-carousel-mki', ImageCarousel);
+window.customElements.define('image-carousel-mki', ImageCarouselmki);
