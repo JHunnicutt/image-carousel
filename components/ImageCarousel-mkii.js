@@ -35,15 +35,29 @@ template2.innerHTML = `
             grid-row-end: -1;
         }
 
+        .img img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
 
     </style>
     <div class="img-carousel">
         <button class="decreaseBtn"><</button>
         <div class="img-grid">
-            <div class="img img-1"></div>
-            <div class="img img-2"></div>
-            <div class="img img-3"></div>
-            <div class="img img-4"></div>
+            <div class="img img-1">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+            </div>
+            <div class="img img-2">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+            </div>
+            <div class="img img-3">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+            </div>
+            <div class="img img-4">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+            </div>
         </div>
         <button class="increaseBtn">></button>
     </div>
@@ -57,41 +71,41 @@ class ImageCarouselmkii extends HTMLElement {
 
 		this.increaseBtn = this.shadow.querySelector('.increaseBtn');
 		this.decreaseBtn = this.shadow.querySelector('.decreaseBtn');
-		this.img1 = this.shadow.querySelector('.img-1');
-		this.img2 = this.shadow.querySelector('.img-2');
-		this.img3 = this.shadow.querySelector('.img-3');
-		this.img4 = this.shadow.querySelector('.img-4');
-		this.colorArray = [];
+		this.img1 = this.shadow.querySelector('.img-1 img');
+		this.img2 = this.shadow.querySelector('.img-2 img');
+		this.img3 = this.shadow.querySelector('.img-3 img');
+		this.img4 = this.shadow.querySelector('.img-4 img');
+		// this.colorArray = [];
 	}
 
 	connectedCallback() {
 		this.increaseBtn.addEventListener('click', this.increaseBtnHandler);
 		this.decreaseBtn.addEventListener('click', this.decreaseBtnHandler);
-		this.colorArray = JSON.parse(this.dataset.colorarray);
+		this.imageArray = JSON.parse(this.dataset.imagearray);
 		this.renderImages();
 	}
 
 	renderImages() {
-		this.img1.style.background = this.colorArray[0];
-		this.img2.style.background = this.colorArray[1];
-		this.img3.style.background = this.colorArray[2];
-		this.img4.style.background = this.colorArray[3];
+		this.img1.src = this.imageArray[0];
+		this.img2.src = this.imageArray[1];
+		this.img3.src = this.imageArray[2];
+		this.img4.src = this.imageArray[3];
 	}
 
 	increaseBtnHandler = () => {
-		const color = this.colorArray.shift();
-		this.colorArray.push(color);
+		const image = this.imageArray.shift();
+		this.imageArray.push(image);
 
-		console.log(this.colorArray);
+		console.log(this.imageArray);
 
 		this.renderImages();
 	};
 
 	decreaseBtnHandler = () => {
-		const color = this.colorArray.pop();
-		this.colorArray.splice(0, 0, color);
+		const image = this.imageArray.pop();
+		this.imageArray.splice(0, 0, image);
 
-		console.log(this.colorArray);
+		console.log(this.imageArray);
 
 		this.renderImages();
 	};
