@@ -6,13 +6,26 @@ template2.innerHTML = `
             height: 100%;
         }
 
+        button svg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 16px;
+            height: 30px;
+        }
+
         button {
             background: transparent;
             border: none;
+            color: #686868;
         }
 
         button:hover {
-            color: gray;
+            color: rgba(35, 50, 53, 0.85);
+        }
+
+        button:active {
+            color: #000;
         }
 
         .img-grid {
@@ -44,7 +57,11 @@ template2.innerHTML = `
 
     </style>
     <div class="img-carousel">
-        <button class="decreaseBtn"><</button>
+        <button class="decreaseBtn">
+            <svg>
+                <use xlink:href="#decrease-arrow" />
+            </svg>
+        </button>
         <div class="img-grid">
             <div class="img img-1">
                 <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
@@ -59,8 +76,20 @@ template2.innerHTML = `
                 <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
         </div>
-        <button class="increaseBtn">></button>
+        <button class="increaseBtn">
+            <svg>
+                <use xlink:href="#increase-arrow" />
+            </svg>
+        </button>
     </div>
+    <svg style="display: none;">
+        <symbol id="increase-arrow">
+            <path d="M2 29L14 15.5185L2 1" stroke="currentColor" stroke-width="3" fill="none"/>
+        </symbol>
+        <symbol id="decrease-arrow">
+            <path d="M14 1L2 14.4815L14 29" stroke="currentColor" stroke-width="3" fill="none"/>
+        </symbol>
+    </svg>
 `;
 
 class ImageCarouselmkii extends HTMLElement {
