@@ -124,18 +124,27 @@ class ImageCarousel extends HTMLElement {
 		this.renderImages();
 	}
 
-	renderImages() {
-		this.img1.src = this.imageArray[0];
-		this.img2.src = this.imageArray[1];
-		this.img3.src = this.imageArray[2];
-		this.img4.src = this.imageArray[3];
-	}
+	renderImages = () => {
+		// image 1
+		this.img1.src = this.imageArray[0].url;
+		this.img1.alt = this.imageArray[0].title;
+
+		// image 2
+		this.img2.src = this.imageArray[1].url;
+		this.img2.alt = this.imageArray[1].title;
+
+		// image 3
+		this.img3.src = this.imageArray[2].url;
+		this.img3.alt = this.imageArray[2].title;
+
+		// image 4
+		this.img4.src = this.imageArray[3].url;
+		this.img4.alt = this.imageArray[3].title;
+	};
 
 	nextBtnHandler = () => {
 		const image = this.imageArray.pop();
 		this.imageArray.splice(0, 0, image);
-
-		console.log(this.imageArray);
 
 		this.renderImages();
 	};
@@ -143,8 +152,6 @@ class ImageCarousel extends HTMLElement {
 	previousBtnHandler = () => {
 		const image = this.imageArray.shift();
 		this.imageArray.push(image);
-
-		console.log(this.imageArray);
 
 		this.renderImages();
 	};
