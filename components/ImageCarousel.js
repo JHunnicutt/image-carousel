@@ -109,8 +109,8 @@ class ImageCarousel extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: 'open' });
 		this.shadow.appendChild(carouselTemplate.content.cloneNode(true));
 
-		this.increaseBtn = this.shadow.querySelector('.previous-btn');
-		this.decreaseBtn = this.shadow.querySelector('.next-btn');
+		this.nextBtn = this.shadow.querySelector('.previous-btn');
+		this.previousBtn = this.shadow.querySelector('.next-btn');
 		this.img1 = this.shadow.querySelector('.img-1 img');
 		this.img2 = this.shadow.querySelector('.img-2 img');
 		this.img3 = this.shadow.querySelector('.img-3 img');
@@ -118,8 +118,8 @@ class ImageCarousel extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.increaseBtn.addEventListener('click', this.increaseBtnHandler);
-		this.decreaseBtn.addEventListener('click', this.decreaseBtnHandler);
+		this.nextBtn.addEventListener('click', this.nextBtnHandler);
+		this.previousBtn.addEventListener('click', this.previousBtnHandler);
 		this.imageArray = JSON.parse(this.dataset.imagearray);
 		this.renderImages();
 	}
@@ -131,7 +131,7 @@ class ImageCarousel extends HTMLElement {
 		this.img4.src = this.imageArray[3];
 	}
 
-	increaseBtnHandler = () => {
+	nextBtnHandler = () => {
 		const image = this.imageArray.shift();
 		this.imageArray.push(image);
 
@@ -140,7 +140,7 @@ class ImageCarousel extends HTMLElement {
 		this.renderImages();
 	};
 
-	decreaseBtnHandler = () => {
+	previousBtnHandler = () => {
 		const image = this.imageArray.pop();
 		this.imageArray.splice(0, 0, image);
 
