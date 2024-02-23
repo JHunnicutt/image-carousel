@@ -1,5 +1,5 @@
-const template2 = document.createElement('template');
-template2.innerHTML = `
+const carouselTemplate = document.createElement('template');
+carouselTemplate.innerHTML = `
     <style>
         .carousel {
             display: flex;
@@ -103,11 +103,11 @@ template2.innerHTML = `
     </svg>
 `;
 
-class ImageCarouselmkii extends HTMLElement {
+class ImageCarousel extends HTMLElement {
 	constructor() {
 		super();
 		this.shadow = this.attachShadow({ mode: 'open' });
-		this.shadow.appendChild(template2.content.cloneNode(true));
+		this.shadow.appendChild(carouselTemplate.content.cloneNode(true));
 
 		this.increaseBtn = this.shadow.querySelector('.previous-btn');
 		this.decreaseBtn = this.shadow.querySelector('.next-btn');
@@ -150,4 +150,4 @@ class ImageCarouselmkii extends HTMLElement {
 	};
 }
 
-window.customElements.define('image-carousel-mkii', ImageCarouselmkii);
+window.customElements.define('image-carousel', ImageCarousel);
