@@ -18,6 +18,7 @@ template2.innerHTML = `
             background: transparent;
             border: none;
             color: #686868;
+            padding: 0;
         }
 
         button:hover {
@@ -28,11 +29,16 @@ template2.innerHTML = `
             color: #000;
         }
 
+        .decreaseBtn {
+            grid-row-start: 4;
+            grid-column-start: 1;
+        }
+
         .img-grid {
             flex: 1;
             display: grid;
             gap: 20px;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(11, 1fr);
             grid-template-rows: repeat(4, 1fr);
             width: 100%;
             height: 100%;
@@ -41,11 +47,18 @@ template2.innerHTML = `
         .img-1 {
             grid-column: 1 / -1;
             grid-row: 1 / 4;
-            // background: darkslateblue;
         }
 
-        .img-2, .img-3, .img-4 {
-            grid-row-end: -1;
+        .img-2 {
+            grid-column: 2 / span 3;
+        }
+
+        .img-3 {
+            grid-column: 5 / span 3;
+        }
+
+        .img-4 {
+            grid-column: 8 / span 3;
         }
 
         .img img {
@@ -57,11 +70,7 @@ template2.innerHTML = `
 
     </style>
     <div class="img-carousel">
-        <button class="decreaseBtn">
-            <svg>
-                <use xlink:href="#decrease-arrow" />
-            </svg>
-        </button>
+        
         <div class="img-grid">
             <div class="img img-1">
                 <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
@@ -75,12 +84,17 @@ template2.innerHTML = `
             <div class="img img-4">
                 <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
-        </div>
-        <button class="increaseBtn">
+            <button class="decreaseBtn">
+                <svg>
+                    <use xlink:href="#decrease-arrow" />
+                </svg>
+            </button>
+            <button class="increaseBtn">
             <svg>
                 <use xlink:href="#increase-arrow" />
             </svg>
         </button>
+        </div>
     </div>
     <svg style="display: none;">
         <symbol id="increase-arrow">
@@ -104,7 +118,6 @@ class ImageCarouselmkii extends HTMLElement {
 		this.img2 = this.shadow.querySelector('.img-2 img');
 		this.img3 = this.shadow.querySelector('.img-3 img');
 		this.img4 = this.shadow.querySelector('.img-4 img');
-		// this.colorArray = [];
 	}
 
 	connectedCallback() {
