@@ -132,8 +132,8 @@ class ImageCarousel extends HTMLElement {
 	}
 
 	nextBtnHandler = () => {
-		const image = this.imageArray.shift();
-		this.imageArray.push(image);
+		const image = this.imageArray.pop();
+		this.imageArray.splice(0, 0, image);
 
 		console.log(this.imageArray);
 
@@ -141,8 +141,8 @@ class ImageCarousel extends HTMLElement {
 	};
 
 	previousBtnHandler = () => {
-		const image = this.imageArray.pop();
-		this.imageArray.splice(0, 0, image);
+		const image = this.imageArray.shift();
+		this.imageArray.push(image);
 
 		console.log(this.imageArray);
 
