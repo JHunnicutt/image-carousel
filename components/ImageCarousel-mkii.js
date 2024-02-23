@@ -1,40 +1,12 @@
 const template2 = document.createElement('template');
 template2.innerHTML = `
     <style>
-        .img-carousel {
+        .carousel {
             display: flex;
             height: 100%;
         }
 
-        button svg {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 16px;
-            height: 30px;
-        }
-
-        button {
-            background: transparent;
-            border: none;
-            color: #686868;
-            padding: 0;
-        }
-
-        button:hover {
-            color: rgba(35, 50, 53, 0.85);
-        }
-
-        button:active {
-            color: #000;
-        }
-
-        .decreaseBtn {
-            grid-row-start: 4;
-            grid-column-start: 1;
-        }
-
-        .img-grid {
+        .carousel__grid {
             flex: 1;
             display: grid;
             gap: 20px;
@@ -42,6 +14,12 @@ template2.innerHTML = `
             grid-template-rows: repeat(4, 1fr);
             width: 100%;
             height: 100%;
+        }
+
+        .carousel__image img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
         }
 
         .img-1 {
@@ -61,38 +39,57 @@ template2.innerHTML = `
             grid-column: 8 / span 3;
         }
 
-        .img img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
+        button {
+            background: transparent;
+            border: none;
+            color: #686868;
+            padding: 0;
         }
 
+        button svg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 16px;
+            height: 30px;
+        }
 
+        button:hover {
+            color: rgba(35, 50, 53, 0.85);
+        }
+
+        button:active {
+            color: #000;
+        }
+
+        .previous-btn {
+            grid-row-start: 4;
+            grid-column-start: 1;
+        }
     </style>
-    <div class="img-carousel">
-        
-        <div class="img-grid">
-            <div class="img img-1">
+    <div class="carousel">
+        <div class="carousel__grid">
+            <div class="carousel__image img-1">
                 <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
-            <div class="img img-2">
+            <div class="carousel__image img-2">
                 <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
-            <div class="img img-3">
+            <div class="carousel__image img-3">
                 <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
-            <div class="img img-4">
+            <div class="carousel__image img-4">
                 <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
-            <button class="decreaseBtn">
+            <button class="previous-btn">
                 <svg>
                     <use xlink:href="#decrease-arrow" />
                 </svg>
             </button>
-            <button class="increaseBtn">
-            <svg>
-                <use xlink:href="#increase-arrow" />
-            </svg>
+            <button class="next-btn">
+                <svg>
+                    <use xlink:href="#increase-arrow" />
+                </svg>
         </button>
         </div>
     </div>
@@ -112,8 +109,8 @@ class ImageCarouselmkii extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: 'open' });
 		this.shadow.appendChild(template2.content.cloneNode(true));
 
-		this.increaseBtn = this.shadow.querySelector('.increaseBtn');
-		this.decreaseBtn = this.shadow.querySelector('.decreaseBtn');
+		this.increaseBtn = this.shadow.querySelector('.previous-btn');
+		this.decreaseBtn = this.shadow.querySelector('.next-btn');
 		this.img1 = this.shadow.querySelector('.img-1 img');
 		this.img2 = this.shadow.querySelector('.img-2 img');
 		this.img3 = this.shadow.querySelector('.img-3 img');
