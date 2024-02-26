@@ -20,6 +20,7 @@ carouselTemplate.innerHTML = `
             height: 100%;
             width: 100%;
             object-fit: cover;
+            user-select: none;
         }
 
         .img-1 {
