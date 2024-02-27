@@ -38,38 +38,27 @@ carouselTemplate.innerHTML = `
         }
 
         .carousel__images {
-            grid-column: 2 / 11;
             display: flex;
             gap: 20px;
             justify-content: center;
+            grid-column: 2 / 11;
             overflow: hidden;
         }
 
         .carousel__image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
         }
 
-        .img-1 img {
+        .carousel__image img {
             height: 100%;
             width: 100%;
             object-fit: cover;
         }
 
-        .carousel__image-container {
+        .secondary-image-container {
             width: 33%;
-            height: 100%;
         }
-
-        .carousel__image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-       
-
        
         button {
             background: transparent;
@@ -93,10 +82,6 @@ carouselTemplate.innerHTML = `
         button:active {
             color: #000;
         }
-
-
-
-        
     </style>
     <div class="carousel">
         <div class="carousel__grid">
@@ -116,16 +101,6 @@ carouselTemplate.innerHTML = `
                 </svg>
                 </button>
                 <div class="carousel__images">
-                    <div class="carousel__image-container">
-                        <!-- <div class="test-img"></div> -->
-                        <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-                    </div>
-                    <div class="carousel__image-container">
-                        <!-- <div class="test-img"></div> -->
-                        <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-                    </div>
-
-                    
                 </div>
                 <button class="next-btn">
                     <svg>
@@ -154,12 +129,11 @@ class ImageCarousel extends HTMLElement {
 
 		this.carouselGrid = this.shadow.querySelector('.carousel__grid');
 		this.carouselImages = this.shadow.querySelector('.carousel__images');
+		this.primaryImg = this.shadow.querySelector(
+			'.carousel__main-img .carousel__image img'
+		);
 		this.nextBtn = this.shadow.querySelector('.previous-btn');
 		this.previousBtn = this.shadow.querySelector('.next-btn');
-		this.img1 = this.shadow.querySelector('.img-1 img');
-		// this.img2 = this.shadow.querySelector('.img-2 img');
-		// this.img3 = this.shadow.querySelector('.img-3 img');
-		// this.img4 = this.shadow.querySelector('.img-4 img');
 	}
 
 	connectedCallback() {
@@ -175,10 +149,9 @@ class ImageCarousel extends HTMLElement {
 	}
 
 	renderImages = () => {
-		console.log(this.imageArray);
 		// image 1
-		this.img1.src = this.imageArray[0].url;
-		this.img1.alt = this.imageArray[0].title;
+		this.primaryImg.src = this.imageArray[0].url;
+		this.primaryImg.alt = this.imageArray[0].title;
 
 		if (this.imageArray.length < 2) {
 			this.carouselGrid.classList.add('single');
@@ -188,7 +161,9 @@ class ImageCarousel extends HTMLElement {
 							.slice(1, 4)
 							.map(
 								(item, index) =>
-									`<div class="carousel__image-container img-${index + 2}">
+									`<div class="carousel__image secondary-image-container img-${
+										index + 2
+									}">
                                                 <img src="${item.url}" /></div>`
 							)
 							.join('')}
