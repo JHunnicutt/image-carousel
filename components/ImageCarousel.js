@@ -11,7 +11,41 @@ carouselTemplate.innerHTML = `
             display: grid;
             gap: 20px;
             grid-template-columns: repeat(11, 1fr);
-            grid-template-rows: repeat(4, 1fr);
+            grid-template-rows: 75% 25%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel__main-img {
+            grid-column: 1 / -1;
+        }
+
+        .carousel__grid.single .carousel__main-img {
+            grid-row: 1 / -1;
+        }
+
+        .carousel__controls {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(11, 1fr);
+            width: 100%;
+            height: 100%;
+            grid-column: 1 / -1;
+        }
+
+        .carousel__grid.single .carousel__controls {
+            display: none;
+        }
+
+        .carousel__images {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            grid-column: 2 / 11;
+            overflow: hidden;
+        }
+
+        .carousel__image {
             width: 100%;
             height: 100%;
         }
@@ -20,26 +54,12 @@ carouselTemplate.innerHTML = `
             height: 100%;
             width: 100%;
             object-fit: cover;
-            user-select: none;
         }
 
-        .img-1 {
-            grid-column: 1 / -1;
-            grid-row: 1 / 4;
+        .secondary-image-container {
+            width: 33%;
         }
-
-        .img-2 {
-            grid-column: 2 / span 3;
-        }
-
-        .img-3 {
-            grid-column: 5 / span 3;
-        }
-
-        .img-4 {
-            grid-column: 8 / span 3;
-        }
-
+       
         button {
             background: transparent;
             border: none;
@@ -62,36 +82,33 @@ carouselTemplate.innerHTML = `
         button:active {
             color: #000;
         }
-
-        .previous-btn {
-            grid-row-start: 4;
-            grid-column-start: 1;
-        }
     </style>
     <div class="carousel">
         <div class="carousel__grid">
-            <div class="carousel__image img-1">
-                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+            <div class="carousel__main-img">
+
+                <div class="carousel__image img-1">
+                    <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+                </div>
+
             </div>
-            <div class="carousel__image img-2">
-                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-            </div>
-            <div class="carousel__image img-3">
-                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-            </div>
-            <div class="carousel__image img-4">
-                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-            </div>
-            <button class="previous-btn">
+                
+            <div class="carousel__controls">
+
+                <button class="previous-btn">
                 <svg>
                     <use xlink:href="#decrease-arrow" />
                 </svg>
-            </button>
-            <button class="next-btn">
-                <svg>
-                    <use xlink:href="#increase-arrow" />
-                </svg>
-        </button>
+                </button>
+                <div class="carousel__images">
+                </div>
+                <button class="next-btn">
+                    <svg>
+                        <use xlink:href="#increase-arrow" />
+                    </svg>
+                </button>
+
+            </div>
         </div>
     </div>
     <svg style="display: none;">
@@ -110,37 +127,48 @@ class ImageCarousel extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: 'open' });
 		this.shadow.appendChild(carouselTemplate.content.cloneNode(true));
 
+		this.carouselGrid = this.shadow.querySelector('.carousel__grid');
+		this.carouselImages = this.shadow.querySelector('.carousel__images');
+		this.primaryImg = this.shadow.querySelector(
+			'.carousel__main-img .carousel__image img'
+		);
 		this.nextBtn = this.shadow.querySelector('.previous-btn');
 		this.previousBtn = this.shadow.querySelector('.next-btn');
-		this.img1 = this.shadow.querySelector('.img-1 img');
-		this.img2 = this.shadow.querySelector('.img-2 img');
-		this.img3 = this.shadow.querySelector('.img-3 img');
-		this.img4 = this.shadow.querySelector('.img-4 img');
 	}
 
 	connectedCallback() {
-		this.nextBtn.addEventListener('click', this.nextBtnHandler);
-		this.previousBtn.addEventListener('click', this.previousBtnHandler);
+		if (this.nextBtn) {
+			this.nextBtn.addEventListener('click', this.nextBtnHandler);
+		}
+
+		if (this.previousBtn) {
+			this.previousBtn.addEventListener('click', this.previousBtnHandler);
+		}
 		this.imageArray = JSON.parse(this.dataset.imagearray);
 		this.renderImages();
 	}
 
 	renderImages = () => {
 		// image 1
-		this.img1.src = this.imageArray[0].url;
-		this.img1.alt = this.imageArray[0].title;
+		this.primaryImg.src = this.imageArray[0].url;
+		this.primaryImg.alt = this.imageArray[0].title;
 
-		// image 2
-		this.img2.src = this.imageArray[1].url;
-		this.img2.alt = this.imageArray[1].title;
-
-		// image 3
-		this.img3.src = this.imageArray[2].url;
-		this.img3.alt = this.imageArray[2].title;
-
-		// image 4
-		this.img4.src = this.imageArray[3].url;
-		this.img4.alt = this.imageArray[3].title;
+		if (this.imageArray.length < 2) {
+			this.carouselGrid.classList.add('single');
+		} else {
+			this.carouselImages.innerHTML = `
+		        ${this.imageArray
+							.slice(1, 4)
+							.map(
+								(item, index) =>
+									`<div class="carousel__image secondary-image-container img-${
+										index + 2
+									}">
+                                                <img src="${item.url}" /></div>`
+							)
+							.join('')}
+		    `;
+		}
 	};
 
 	nextBtnHandler = () => {
