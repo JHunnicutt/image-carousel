@@ -2,24 +2,29 @@ const carouselTemplate = document.createElement('template');
 carouselTemplate.innerHTML = `
     <style>
         :host {
-            --gap: 12px;
-        }
-
-        .carousel {
-            display: grid;
-            grid-template-rows: 70% calc(30% - var(--gap));
-            gap: var(--gap);
-            height: 100%;
-            width: 100%;
+            --r-gap: 3.76%;
+            --c-gap: 5.83%;
         }
 
         .carousel.single {
             grid-template-rows: 1fr;
+            grid-template-columns: 1fr;
+        }
+
+        .carousel {
+            display: grid;
+            grid-template-rows: calc(80.47% - (var(--r-gap) /2)) calc(19.53% - (var(--r-gap) /2));
+            grid-template-columns: 8.07% 83.86% 8.07%;
+            row-gap: var(--r-gap);
+            height: 100%;
+            aspect-ratio: 1 / 1.3;
         }
 
         .carousel__main {
             width: 100%;
             height: 100%;
+            grid-row: 1 / 2;
+            grid-column: 2 / 3;
         }
 
         .carousel__main img {
@@ -28,25 +33,18 @@ carouselTemplate.innerHTML = `
             object-fit: cover;
         }
 
-        .carousel__sub {
-            display: grid;
-            grid-template-columns: repeat(11, 1fr);
-            gap: var(--gap);
-            width: 100%;
-            height: 100%;
-        }
-
         .carousel.single .carousel__sub {
             display: none;
         }
 
-        .carousel__sub-images {
+        .carousel__sub {
             display: flex;
             justify-content: center;
-            gap: var(--gap);
-            grid-column: 2 / 11;
+            gap: var(--c-gap);
             width: 100%;
             height: 100%;
+            grid-row: 2 / -1;
+            grid-column: 2 / 3;
         }
 
         .carousel__sub-image {
@@ -61,19 +59,16 @@ carouselTemplate.innerHTML = `
             object-fit: cover;
         }
 
+        .carousel.single button {
+            display: none;
+        }
+
         button {
             background: transparent;
             border: none;
             color: #686868;
             padding: 0;
-        }
-
-        button svg {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 16px;
-            height: 30px;
+            cursor: pointer;
         }
 
         button:hover {
@@ -84,34 +79,56 @@ carouselTemplate.innerHTML = `
             color: #000;
         }
 
+        button svg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 16px;
+            height: 30px;
+        }
+
+        .next-btn {
+            grid-row: 1 / 2;
+            grid-column: 3 / -1;
+            justify-self: end;
+        }
+
+        .previous-btn {
+            grid-row: 1 / 2;
+            grid-column: 1 / 2;
+            justify-self: start;
+        }
+
     </style>
     <div class="carousel">
+        
         <div class="carousel__main">
             <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
         </div>
+        
         <div class="carousel__sub">
-            <button class="previous-btn">
-                <svg>
-                    <use xlink:href="#decrease-arrow" />
-                </svg>
-            </button>
-            <div class="carousel__sub-images">
-                <div class="carousel__sub-image">
-                    <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-                </div>
-                <div class="carousel__sub-image">
-                    <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-                </div>
-                <div class="carousel__sub-image">
-                    <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-                </div>
+            <div class="carousel__sub-image">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
-            <button class="next-btn">
+            <div class="carousel__sub-image">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+            </div>
+            <div class="carousel__sub-image">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+            </div>
+        </div>
+        
+        <button class="next-btn">
                 <svg>
                     <use xlink:href="#increase-arrow" />
                 </svg>
             </button>
-        </div>
+        <button class="previous-btn">
+            <svg>
+                <use xlink:href="#decrease-arrow" />
+            </svg>
+        </button>
+        
     </div>
 
     <svg style="display: none;">
@@ -132,7 +149,7 @@ class ImageCarousel extends HTMLElement {
 
 		this.carousel = this.shadow.querySelector('.carousel');
 		this.primaryImg = this.shadow.querySelector('.carousel__main img');
-		this.carouselSubImages = this.shadow.querySelector('.carousel__sub-images');
+		this.carouselSubImages = this.shadow.querySelector('.carousel__sub');
 		this.nextBtn = this.shadow.querySelector('.previous-btn');
 		this.previousBtn = this.shadow.querySelector('.next-btn');
 	}
