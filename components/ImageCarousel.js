@@ -69,6 +69,8 @@ carouselTemplate.innerHTML = `
             color: #686868;
             padding: 0;
             cursor: pointer;
+            width: 100%;
+            height: fit-content;
         }
 
         button:hover {
@@ -79,24 +81,32 @@ carouselTemplate.innerHTML = `
             color: #000;
         }
 
-        button svg {
+        .btn-container {
             display: flex;
-            justify-content: center;
             align-items: center;
-            width: 16px;
-            height: 30px;
         }
-
-        .next-btn {
+    
+        .btn-container:has(> .next-btn) {
             grid-row: 1 / 2;
             grid-column: 3 / -1;
-            justify-self: end;
+        }
+
+        .btn-container:has(> .prev-button) {
+            grid-row: 1 / 2;
+            grid-column: 1 / 2;
+        }
+
+        button svg {
+           width: 16px;
+           height: 30px;
         }
 
         .previous-btn {
-            grid-row: 1 / 2;
-            grid-column: 1 / 2;
-            justify-self: start;
+            text-align: start;
+        }
+
+        .next-btn {
+            text-align: end;
         }
 
     </style>
@@ -118,16 +128,21 @@ carouselTemplate.innerHTML = `
             </div>
         </div>
         
-        <button class="next-btn">
+        <div class="btn-container">
+            <button class="next-btn">
                 <svg>
-                    <use xlink:href="#increase-arrow" />
+                    <use href="#increase-arrow" />
                 </svg>
             </button>
-        <button class="previous-btn">
-            <svg>
-                <use xlink:href="#decrease-arrow" />
-            </svg>
-        </button>
+        </div>
+        
+        <div class="btn-container">
+            <button class="previous-btn">
+                <svg>
+                    <use href="#decrease-arrow" />
+                </svg>
+            </button>
+        </div>
         
     </div>
 
