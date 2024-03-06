@@ -6,11 +6,6 @@ carouselTemplate.innerHTML = `
             --c-gap: 5.83%;
         }
 
-        .carousel.single {
-            grid-template-rows: 1fr;
-            grid-template-columns: 1fr;
-        }
-
         .carousel {
             display: grid;
             grid-template-rows: calc(80.47% - (var(--r-gap) /2)) calc(19.53% - (var(--r-gap) /2));
@@ -20,6 +15,10 @@ carouselTemplate.innerHTML = `
             aspect-ratio: 1 / 1.3;
         }
 
+        .carousel.single {
+            grid-template-rows: 100%;
+        }
+
         .carousel__main {
             width: 100%;
             height: 100%;
@@ -27,14 +26,15 @@ carouselTemplate.innerHTML = `
             grid-column: 2 / 3;
         }
 
+        .carousel.single .carousel__main {
+            grid-row: 1 / -1;
+            grid-column: 1 / -1;
+        }
+
         .carousel__main img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .carousel.single .carousel__sub {
-            display: none;
         }
 
         .carousel__sub {
@@ -45,6 +45,10 @@ carouselTemplate.innerHTML = `
             height: 100%;
             grid-row: 2 / -1;
             grid-column: 2 / 3;
+        }
+
+        .carousel.single .carousel__sub {
+            display: none;
         }
 
         .carousel__sub-image {
@@ -59,7 +63,7 @@ carouselTemplate.innerHTML = `
             object-fit: cover;
         }
 
-        .carousel.single button {
+        .carousel.single .btn-container {
             display: none;
         }
 
