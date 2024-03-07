@@ -1,78 +1,85 @@
 const carouselTemplate = document.createElement('template');
 carouselTemplate.innerHTML = `
     <style>
-        .carousel {
+        :host {
+            --r-gap: 3.76%;
+            --c-gap: 5.83%;
             display: flex;
-            height: 100%;
-        }
-
-        .carousel__grid {
-            flex: 1;
-            display: grid;
-            gap: 20px;
-            grid-template-columns: repeat(11, 1fr);
-            grid-template-rows: 75% 25%;
-            width: 100%;
-            height: 100%;
-        }
-
-        .carousel__main-img {
-            grid-column: 1 / -1;
-        }
-
-        .carousel__grid.single .carousel__main-img {
-            grid-row: 1 / -1;
-        }
-
-        .carousel__controls {
-            display: grid;
-            gap: 20px;
-            grid-template-columns: repeat(11, 1fr);
-            width: 100%;
-            height: 100%;
-            grid-column: 1 / -1;
-        }
-
-        .carousel__grid.single .carousel__controls {
-            display: none;
-        }
-
-        .carousel__images {
-            display: flex;
-            gap: 20px;
             justify-content: center;
-            grid-column: 2 / 11;
-            overflow: hidden;
         }
 
-        .carousel__image {
-            width: 100%;
-            height: 100%;
+        .carousel * {
+            user-select: none;
         }
 
-        .carousel__image img {
+        .carousel {
+            display: grid;
+            grid-template-rows: calc(80.47% - (var(--r-gap) /2)) calc(19.53% - (var(--r-gap) /2));
+            grid-template-columns: 8.07% 83.86% 8.07%;
+            row-gap: var(--r-gap);
             height: 100%;
+            aspect-ratio: 1 / 1.3;
+        }
+
+        .carousel.single {
+            grid-template-rows: 100%;
+        }
+
+        .carousel__main {
             width: 100%;
+            height: 100%;
+            grid-row: 1 / 2;
+            grid-column: 2 / 3;
+        }
+
+        .carousel.single .carousel__main {
+            grid-row: 1 / -1;
+            grid-column: 1 / -1;
+        }
+
+        .carousel__main img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
-        .secondary-image-container {
-            width: 33%;
+        .carousel__sub {
+            display: flex;
+            justify-content: center;
+            gap: var(--c-gap);
+            width: 100%;
+            height: 100%;
+            grid-row: 2 / -1;
+            grid-column: 2 / 3;
         }
-       
+
+        .carousel.single .carousel__sub {
+            display: none;
+        }
+
+        .carousel__sub-image {
+            width: 33%;
+            height: 100%;
+        }
+
+        .carousel__sub-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel.single .btn-container {
+            display: none;
+        }
+
         button {
             background: transparent;
             border: none;
             color: #686868;
             padding: 0;
-        }
-
-        button svg {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 16px;
-            height: 30px;
+            cursor: pointer;
+            width: 100%;
+            height: fit-content;
         }
 
         button:hover {
@@ -82,35 +89,72 @@ carouselTemplate.innerHTML = `
         button:active {
             color: #000;
         }
+
+        .btn-container {
+            display: flex;
+            align-items: center;
+        }
+    
+        .btn-container:has(> .next-btn) {
+            grid-row: 1 / 2;
+            grid-column: 3 / -1;
+        }
+
+        .btn-container:has(> .prev-button) {
+            grid-row: 1 / 2;
+            grid-column: 1 / 2;
+        }
+
+        button svg {
+           width: 16px;
+           height: 30px;
+        }
+
+        .previous-btn {
+            text-align: start;
+        }
+
+        .next-btn {
+            text-align: end;
+        }
+
     </style>
     <div class="carousel">
-        <div class="carousel__grid">
-            <div class="carousel__main-img">
-
-                <div class="carousel__image img-1">
-                    <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
-                </div>
-
+        
+        <div class="carousel__main">
+            <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+        </div>
+        
+        <div class="carousel__sub">
+            <div class="carousel__sub-image">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
-                
-            <div class="carousel__controls">
-
-                <button class="previous-btn">
-                <svg>
-                    <use xlink:href="#decrease-arrow" />
-                </svg>
-                </button>
-                <div class="carousel__images">
-                </div>
-                <button class="next-btn">
-                    <svg>
-                        <use xlink:href="#increase-arrow" />
-                    </svg>
-                </button>
-
+            <div class="carousel__sub-image">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
+            </div>
+            <div class="carousel__sub-image">
+                <img src="https://staging2.findstemz.com/wp-content/uploads/2023/11/PicComingSoon-square.png" alt="coming soon" />
             </div>
         </div>
+        
+        <div class="btn-container">
+            <button class="next-btn">
+                <svg>
+                    <use href="#increase-arrow" />
+                </svg>
+            </button>
+        </div>
+        
+        <div class="btn-container">
+            <button class="previous-btn">
+                <svg>
+                    <use href="#decrease-arrow" />
+                </svg>
+            </button>
+        </div>
+        
     </div>
+
     <svg style="display: none;">
         <symbol id="increase-arrow">
             <path d="M2 29L14 15.5185L2 1" stroke="currentColor" stroke-width="3" fill="none"/>
@@ -127,13 +171,12 @@ class ImageCarousel extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: 'open' });
 		this.shadow.appendChild(carouselTemplate.content.cloneNode(true));
 
-		this.carouselGrid = this.shadow.querySelector('.carousel__grid');
-		this.carouselImages = this.shadow.querySelector('.carousel__images');
-		this.primaryImg = this.shadow.querySelector(
-			'.carousel__main-img .carousel__image img'
-		);
+		this.carousel = this.shadow.querySelector('.carousel');
+		this.primaryImg = this.shadow.querySelector('.carousel__main img');
+		this.carouselSubImages = this.shadow.querySelector('.carousel__sub');
 		this.nextBtn = this.shadow.querySelector('.previous-btn');
 		this.previousBtn = this.shadow.querySelector('.next-btn');
+		this.buttonContainers = this.shadow.querySelectorAll('.btn-container');
 	}
 
 	connectedCallback() {
@@ -152,19 +195,23 @@ class ImageCarousel extends HTMLElement {
 		// image 1
 		this.primaryImg.src = this.imageArray[0].url;
 		this.primaryImg.alt = this.imageArray[0].title;
+		this.primaryImg.setAttribute('loading', 'lazy');
 
 		if (this.imageArray.length < 2) {
-			this.carouselGrid.classList.add('single');
+			this.carousel.classList.add('single');
+			this.carouselSubImages.remove();
+			this.buttonContainers.forEach((btn) => btn.remove());
 		} else {
-			this.carouselImages.innerHTML = `
+			this.carouselSubImages.innerHTML = `
 		        ${this.imageArray
 							.slice(1, 4)
 							.map(
 								(item, index) =>
-									`<div class="carousel__image secondary-image-container img-${
-										index + 2
-									}">
-                                                <img src="${item.url}" /></div>`
+									`<div class="carousel__sub-image img-${index + 2}">
+		                                        <img src="${item.url}" alt="${
+										item.title
+									}" loading="lazy" />
+		                                        </div>`
 							)
 							.join('')}
 		    `;
