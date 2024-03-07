@@ -8,6 +8,10 @@ carouselTemplate.innerHTML = `
             justify-content: center;
         }
 
+        .carousel * {
+            user-select: none;
+        }
+
         .carousel {
             display: grid;
             grid-template-rows: calc(80.47% - (var(--r-gap) /2)) calc(19.53% - (var(--r-gap) /2));
