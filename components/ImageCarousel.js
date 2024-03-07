@@ -4,6 +4,8 @@ carouselTemplate.innerHTML = `
         :host {
             --r-gap: 3.76%;
             --c-gap: 5.83%;
+            display: flex;
+            justify-content: center;
         }
 
         .carousel {
