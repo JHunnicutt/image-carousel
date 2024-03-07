@@ -171,6 +171,7 @@ class ImageCarousel extends HTMLElement {
 		this.carouselSubImages = this.shadow.querySelector('.carousel__sub');
 		this.nextBtn = this.shadow.querySelector('.previous-btn');
 		this.previousBtn = this.shadow.querySelector('.next-btn');
+		this.buttonContainers = this.shadow.querySelectorAll('.btn-container');
 	}
 
 	connectedCallback() {
@@ -192,6 +193,8 @@ class ImageCarousel extends HTMLElement {
 
 		if (this.imageArray.length < 2) {
 			this.carousel.classList.add('single');
+			this.carouselSubImages.remove();
+			this.buttonContainers.forEach((btn) => btn.remove());
 		} else {
 			this.carouselSubImages.innerHTML = `
 		        ${this.imageArray
