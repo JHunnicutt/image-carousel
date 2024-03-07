@@ -60,7 +60,6 @@ carouselTemplate.innerHTML = `
         .carousel__sub-image {
             width: 33%;
             height: 100%;
-            background: steelblue;
         }
 
         .carousel__sub-image img {
