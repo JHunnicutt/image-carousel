@@ -192,6 +192,7 @@ class ImageCarousel extends HTMLElement {
 		// image 1
 		this.primaryImg.src = this.imageArray[0].url;
 		this.primaryImg.alt = this.imageArray[0].title;
+		this.primaryImg.setAttribute('loading', 'lazy');
 
 		if (this.imageArray.length < 2) {
 			this.carousel.classList.add('single');
@@ -204,7 +205,9 @@ class ImageCarousel extends HTMLElement {
 							.map(
 								(item, index) =>
 									`<div class="carousel__sub-image img-${index + 2}">
-		                                        <img src="${item.url}" />
+		                                        <img src="${item.url}" alt="${
+										item.title
+									}" loading="lazy" />
 		                                        </div>`
 							)
 							.join('')}
